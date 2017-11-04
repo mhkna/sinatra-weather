@@ -1,0 +1,12 @@
+<%= erb :'_errors' %>
+
+<form id="new-location" action="/locations" method="post">
+  <div>
+    <label for="address">Address:</label>
+    <br>
+    <input type="text" name="location[address]">
+  </div>
+  <div>
+    <input type="submit" value="Get Weather">
+  </div>
+</form>
