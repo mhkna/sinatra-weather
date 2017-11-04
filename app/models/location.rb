@@ -17,8 +17,15 @@ class Location < ActiveRecord::Base
   end
 
   def weather_get
-    uri = URI.parse("https://api.darksky.net/forecast/#{ENV["WEATHER_TOKEN"]}/#{self.coords}")
+    uri = URI.parse("https://api.darksky.net/forecast//#{self.coords}")
+    # #{ENV["DARKSKY_TOKEN"]} GET TOKEN WORKING
     api_response = Net::HTTP.get(uri)
     response_collection = JSON.parse(api_response)
+  end
+
+  def daily_summary
+    weather_resp = weather_get
+    weather_resp["daily"]["icon"]
+    weather_resp["daily"]["summary"]
   end
 end
