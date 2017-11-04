@@ -1,0 +1,19 @@
+<h3>Registration</h3>
+
+<%= erb :'_errors' %>
+
+<form action="/users" method="post">
+  <div>
+    <label for="username">E-mail:</label>
+    <br>
+    <input type="text" name="user[email]" value="<%= @user.email %>">
+  </div>
+  <div>
+    <label for="username">Password:</label>
+    <br>
+    <input type="password" name="user[password]">
+  </div>
+  <div>
+    <input type="submit" value="Create Account">
+  </div>
+</form>

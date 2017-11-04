@@ -1,5 +1,5 @@
 get '/' do
-  redirect '/users'
+  redirect '/users/new'
 end
 
 get '/unauthorized' do
