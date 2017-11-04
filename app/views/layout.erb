@@ -13,6 +13,28 @@
   <title></title>
 </head>
 <body>
+  <header>
+    <nav>
+      <ul>
+        <% if logged_in? %>
+          <li><%= current_user.email %></li>
+          <li>
+            <form id="logout-form" action="/sessions" method="post">
+              <input type="hidden" name="_method" value="delete" />
+              <input id="logout-button" type="submit" value="logout" />
+            </form>
+          </li>
+        <% else %>
+          <li><a href="/users/new">register</a></li>
+          <li><a href="/sessions/new">login</a></li>
+        <% end %>
+        <li><a href="/">home</a></li>
+      </ul>
+    </nav>
+    <div class="layout-header">
+      <h1>SkyCast Inc.</h1>
+    </div>
+  </header>
   <%= yield %>
 </body>
 </html>
