@@ -22,18 +22,28 @@ class Location < ActiveRecord::Base
     response_collection = JSON.parse(api_response)
   end
 
-  def daily_summary
-    weather_resp = weather_get
-    weather_resp["daily"]["summary"]
+  def daily_weather
+    p daily_data = weather_get["daily"]["data"][0]
+    output = []
+    daily_data.each do |data|
+      title = data[0]
+      case title
+      when "summary", "icon", "sunriseTime", "sunsetTime", "temperatureMin", "temperatureMax"
+        output << data
+      end
+    end
+    output
   end
 
   def current_weather
-    weather_resp = weather_get["currently"]
-    output = ""
-    weather_resp.each do |weather_category|
-      title = weather_category[0]
-      info = weather_category[1]
-      output << "<p>#{title}: #{info}</p>"
+    current_data = weather_get["currently"]
+    output = []
+    current_data.each do |data|
+      title = data[0]
+      case title
+      when "summary", "icon", "temperature"
+        output << data
+      end
     end
     output
   end

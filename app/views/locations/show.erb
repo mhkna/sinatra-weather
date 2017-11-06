@@ -1,12 +1,19 @@
 <h1>Location Show</h1>
 
-<h1>Results for INSERTXLOCATION</h1>
+<h1>Results for <%= @location.address %></h1>
 
-<%= @location.current_weather %>
+<h2>CURRENT</h2>
+<% @location.current_weather.each do |data| %>
+  <p><%= data[0] %>: <%= data[1] %></p>
+<% end %>
 
-
+<h2>DAILY</h2>
 <p>DAY, DATE</p>
-<h1>SUMMARY MOSTLY CLOUDY DAY</h1>
+
+<% @location.daily_weather.each do |data| %>
+  <p><%= data[0] %>: <%= data[1] %></p>
+<% end %>
+
 
 <p>NEXT 3 DAYS?</p>
 
