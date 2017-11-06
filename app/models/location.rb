@@ -26,7 +26,7 @@ class Location < ActiveRecord::Base
     current_data.each do |data|
       title = data[0]
       case title
-      when "time", "summary", "icon", "temperature"
+      when "summary", "icon", "temperature"
         output << data[1]
       end
     end
