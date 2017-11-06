@@ -1,20 +1,21 @@
-<h1>Location Show</h1>
+<h1>Results for <%= @location.formatted_location %></h1>
 
-<h1>Results for <%= @location.address %></h1>
-
-<h2>CURRENT</h2>
-<% @location.current_weather.each do |data| %>
+<%= @location.weather_get %>
+<!-- <h2>CURRENT</h2>
+<% @location.now_weather.each do |data| %>
   <p><%= data[0] %>: <%= data[1] %></p>
 <% end %>
 
-<h2>DAILY</h2>
-<p>DAY, DATE</p>
+<h2>TODAY</h2>
+<p><%= DateTime.now.strftime('%A, %b %d, %Y') %></p>
 
-<% @location.daily_weather.each do |data| %>
+<% @location.today_weather.each do |data| %>
   <p><%= data[0] %>: <%= data[1] %></p>
 <% end %>
 
-
+<h2>FUTURE</h2>
 <p>NEXT 3 DAYS?</p>
 
-<p>link_to historic</p>
+<h2>PAST</h2>
+<p>HISTORIC CHARTS LAST 20 YEARS OF WEATHER</p> -->
+<!-- <%= @location.past_weather %> -->

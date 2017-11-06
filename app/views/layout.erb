@@ -7,17 +7,18 @@
   -->
   <link rel="stylesheet" href="/css/application.css">
 
+
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/js/application.js"></script>
 
-  <title></title>
+  <title>SkyCast</title>
 </head>
 <body>
   <header>
     <nav>
       <ul>
         <% if logged_in? %>
-          <li><%= current_user.email %></li>
+          <li><a href="/users/<%= current_user.id %>"><%= current_user.email %></li>
           <li>
             <form id="logout-form" action="/sessions" method="post">
               <input type="hidden" name="_method" value="delete" />
