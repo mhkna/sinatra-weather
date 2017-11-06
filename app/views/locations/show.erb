@@ -1,21 +1,35 @@
-<h1>Results for <%= @location.formatted_location %></h1>
+<h2>Results for <%= @location.formatted_location %></h2>
 
-<%= @location.weather_get %>
-<!-- <h2>CURRENT</h2>
-<% @location.now_weather.each do |data| %>
-  <p><%= data[0] %>: <%= data[1] %></p>
-<% end %>
-
-<h2>TODAY</h2>
-<p><%= DateTime.now.strftime('%A, %b %d, %Y') %></p>
-
+<!-- <p><%= DateTime.now.strftime('%A, %b %d, %Y') %></p>
 <% @location.today_weather.each do |data| %>
   <p><%= data[0] %>: <%= data[1] %></p>
-<% end %>
+<% end %> -->
 
-<h2>FUTURE</h2>
-<p>NEXT 3 DAYS?</p>
+<!-- # <% @location.future_weather.each do |data| %>
+#   <p><%= data[0] %>: <%= data[1] %></p>
+# <% end %> -->
 
-<h2>PAST</h2>
-<p>HISTORIC CHARTS LAST 20 YEARS OF WEATHER</p> -->
-<!-- <%= @location.past_weather %> -->
+<!-- # <% @location.past_weather.each do |data| %>
+#   <p><%= data %></p>
+# <% end %> -->
+
+<div class="row">
+  <div class="col-6 col-md-4">
+    <h4>Current</h4>
+    <%= DateTime.strptime(@location.now_weather[0].to_s, '%s').strftime('%A, %b %d, %Y') %>
+    <!-- <% @location.now_weather[1..3].each do |data| %>
+      <p><%= data %></p>
+    <% end %> -->
+  </div>
+  <div class="col col-md-8">
+    <h4>Today</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <h4>Future</h4>
+  </div>
+  <div class="col-6">
+    <h4>Past</h4>
+  </div>
+</div>

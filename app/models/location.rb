@@ -27,7 +27,7 @@ class Location < ActiveRecord::Base
       title = data[0]
       case title
       when "time", "summary", "icon", "temperature"
-        output << data
+        output << data[1]
       end
     end
     output
@@ -45,19 +45,19 @@ class Location < ActiveRecord::Base
   end
 
   def future_weather
-    daily_data = weather_get["daily"]["data"][0]
+    daily_data = weather_get["daily"]["data"]
     output = []
-    daily_data.each do |data|
-      title = data[0]
-      case title
-      when "time", "summary", "icon", "temperatureMax"
-        output << data
+    daily_data[1..3].each do |day|
+      day.each do |data|
+        title = data[0]
+        case title
+        when "time", "summary", "icon", "temperatureMax"
+          output << data
+        end
       end
     end
     output
   end
-
-  # private
 
   def location_info_get
     uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{self.address}&key=#{ENV['GOOGLE_GEO_TOKEN']}")
@@ -86,14 +86,4 @@ class Location < ActiveRecord::Base
     end
     year_array
   end
-
-  def future_dates
-    year = DateTime.now.strftime('%Y').to_i
-    remaining_date = DateTime.now.strftime('-%m-%dT00:00:00')
-    year_array = (year-5..year-1).to_a.map do |year|
-      year.to_s + remaining_date
-    end
-    year_array
-  end
-
 end
