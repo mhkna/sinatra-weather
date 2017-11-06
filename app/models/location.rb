@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   validates :address, presence: true
 
   def location_info_get
-    uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{self.address}&key=#{ENV["GOOGLE_GEO_TOKEN"]}")
+    uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{self.address}&key=#{ENV['GOOGLE_GEO_TOKEN']}")
     api_response = Net::HTTP.get(uri)
     response_collection = JSON.parse(api_response)
   end
@@ -17,7 +17,7 @@ class Location < ActiveRecord::Base
   end
 
   def weather_get
-    uri = URI.parse("https://api.darksky.net/forecast//#{self.coords}")
+    uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{self.coords}")
     api_response = Net::HTTP.get(uri)
     response_collection = JSON.parse(api_response)
   end
@@ -28,9 +28,9 @@ class Location < ActiveRecord::Base
   end
 
   def current_weather
-    weather_resp = weather_get
+    weather_resp = weather_get["currently"]
     output = ""
-    weather_resp["currently"].each do |weather_category|
+    weather_resp.each do |weather_category|
       title = weather_category[0]
       info = weather_category[1]
       output << "<p>#{title}: #{info}</p>"
