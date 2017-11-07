@@ -4,7 +4,7 @@ get '/locations/new' do
 end
 
 post '/locations' do
-  @location = Location.new(params[:location])
+  @location = current_user.locations.new(params[:location])
   if @location.save
     redirect "/locations/#{@location.id}"
   else

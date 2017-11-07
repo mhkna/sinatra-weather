@@ -1,3 +1,5 @@
 USER SHOW PAGE
 
-<%= erb :'locations/new' %>
+<% @user.locations.each do |location| %>
+  <p><%= location.address %></p>
+<% end %>

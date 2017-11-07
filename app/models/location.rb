@@ -1,6 +1,5 @@
 class Location < ActiveRecord::Base
   belongs_to :user
-  has_many :weathers
 
   validates :address, presence: true
 
