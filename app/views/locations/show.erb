@@ -1,18 +1,19 @@
-<h2>Results for location.formatted_address %></h2>
+
+<h2>Results for <%= @location.formatted_address %></h2>
 
 <div class="full-container">
   <div class="row">
     <div class="col-8">
-      <h4>TODAY ICON</H4>
+      <h4><%= @location.today_icon %></H4>
       <div>
         <p><%= DateTime.now.strftime('%A, %b %m, %Y') %></p>
       </div>
-      <h4>Today's SUMMARY</h4>
+      <h4><%= @location.today_summary %></h4>
     </div>
 
     <div class="col-4">
       <h4>Currently</h4>
-      <p> location . now weather in %> </p>
+      <p><%= @location.now_weather %></p>
     </div>
   </div>
 
@@ -34,9 +35,5 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-      CHARTONOWN LINE SAME WITH 3 DAY FORECAST
-    </div>
-  <div>
+  CHART HERE
 </div>

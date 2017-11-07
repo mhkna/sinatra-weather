@@ -3,31 +3,8 @@ class Location < ActiveRecord::Base
 
   validates :address, presence: true
 
-  def hi
-    {"high" => [1, 2, 3, 4, 5], "low" => [4, 5, 6, 7, 8]}
-  end
-
-  def location_info_get
-    uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{self.address}&key=#{ENV['GOOGLE_GEO_TOKEN']}")
-    api_response = Net::HTTP.get(uri)
-    response_collection = JSON.parse(api_response)
-  end
-
-  def coords
-    coords_resp = location_info_get["results"][0]["geometry"]["location"]
-    lat = coords_resp["lat"]
-    lng = coords_resp["lng"]
-    "#{lat},#{lng}"
-  end
-
   def formatted_address
     location_info_get["results"][0]["formatted_address"]
-  end
-
-  def weather_get
-    uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{self.coords}?exclude=minutely,hourly,alerts,flags")
-    api_response = Net::HTTP.get(uri)
-    response_collection = JSON.parse(api_response)
   end
 
   def now_weather
@@ -59,19 +36,6 @@ class Location < ActiveRecord::Base
     "#{percent} chance of #{type}"
   end
 
-  # def today_details
-  #   daily_data = weather_get["daily"]["data"][0]
-  #   output = []
-  #   daily_data.each do |data|
-  #     title = data[0]
-  #     case title
-  #     when "temperatureMin", "temperatureMax", "precipProbability", "precipType"
-  #       output << data
-  #     end
-  #   end
-  #   output
-  # end
-
   def future_weather
     daily_data = weather_get["daily"]["data"]
     output = []
@@ -87,6 +51,37 @@ class Location < ActiveRecord::Base
     output
   end
 
+
+  def past_low_temp
+    past_temp("temperatureLow")
+  end
+
+  def past_high_temp
+    past_temp("temperatureHigh")
+  end
+
+
+  private
+
+  def location_info_get
+    uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{address}&key=#{ENV['GOOGLE_GEO_TOKEN']}")
+    api_response = Net::HTTP.get(uri)
+    response_collection = JSON.parse(api_response)
+  end
+
+  def coords
+    coords_resp = location_info_get["results"][0]["geometry"]["location"]
+    lat = coords_resp["lat"]
+    lng = coords_resp["lng"]
+    "#{lat},#{lng}"
+  end
+
+  def weather_get
+    uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{coords}?exclude=minutely,hourly,alerts,flags")
+    api_response = Net::HTTP.get(uri)
+    response_collection = JSON.parse(api_response)
+  end
+
   def past_dates
     year = DateTime.now.strftime('%Y').to_i
     remaining_date = DateTime.now.strftime('-%m-%dT00:00:00')
@@ -96,13 +91,13 @@ class Location < ActiveRecord::Base
     past_dates_array
   end
 
-  def past_weather
-    output = []
+  def past_temp(category)
+    output = {}
     past_dates.each do |date|
-      uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{self.coords},#{date}?exclude=currently,minutely,hourly,alerts,flags")
+      uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{coords},#{date}?exclude=currently,minutely,hourly,alerts,flags")
       api_response = Net::HTTP.get(uri)
       response_collection = JSON.parse(api_response)
-      output.push(response_collection["daily"]["data"][0]["temperatureHigh"], response_collection["daily"]["data"][0]["temperatureLow"])
+      output[date] = response_collection["daily"]["data"][0][category]
     end
     output
   end
