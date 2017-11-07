@@ -1,5 +1,6 @@
 class Location < ActiveRecord::Base
   belongs_to :user
+  has_many :weathers
 
   validates :address, presence: true
 
@@ -39,7 +40,8 @@ class Location < ActiveRecord::Base
       uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{self.coords},#{date}?exclude=currently,minutely,hourly,alerts,flags")
       api_response = Net::HTTP.get(uri)
       response_collection = JSON.parse(api_response)
-      output << response_collection["daily"]["data"][0]["icon"]
+      output << response_collection["daily"]["data"][0]["temperatureHigh"]
+      output << response_collection["daily"]["data"][0]["temperatureLow"]
     end
     output
   end

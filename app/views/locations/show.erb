@@ -2,8 +2,8 @@
 
 <h4>Today</h4>
 <p><%= DateTime.now.strftime('%A, %b %d, %Y') %></p>
-<% @location.today_weather.each do |data| %>
-  <p><%= data[0] %>: <%= data[1] %></p>
+<% @location.today_weather[1..-1].each do |data| %>
+  <p><%= data[1] %></p>
 <% end %>
 
 <h4>Current</h4>
