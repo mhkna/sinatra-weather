@@ -4,7 +4,7 @@ get '/locations/new' do
 end
 
 post '/locations' do
-  authenticate!
+  redirect '/sessions/new?login=no' unless logged_in?
   @location = current_user.locations.new(params[:location])
   if @location.save
     redirect "/locations/#{@location.id}"

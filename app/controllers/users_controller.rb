@@ -15,6 +15,8 @@ post '/users' do
 end
 
 get '/users/:id' do
+  authenticate!
+  redirect '/unauthorized' unless current_user.id == params[:id].to_i
   @user = User.find(params[:id])
   erb :'users/show'
 end

@@ -3,6 +3,10 @@ class Location < ActiveRecord::Base
 
   validates :address, presence: true
 
+  def hi
+    {"high" => [1, 2, 3, 4, 5], "low" => [4, 5, 6, 7, 8]}
+  end
+
   def location_info_get
     uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?address=#{self.address}&key=#{ENV['GOOGLE_GEO_TOKEN']}")
     api_response = Net::HTTP.get(uri)
@@ -31,28 +35,42 @@ class Location < ActiveRecord::Base
     "#{current_data["summary"].capitalize} and #{current_data["temperature"].round} degrees."
   end
 
+  def daily_data
+    weather_get["daily"]["data"][0]
+  end
+
   def today_summary
-    daily_data = weather_get["daily"]["data"][0]
     daily_data["summary"]
   end
 
   def today_icon
-    daily_data = weather_get["daily"]["data"][0]
     daily_data["icon"]
   end
 
-  def today_details
-    daily_data = weather_get["daily"]["data"][0]
-    output = []
-    daily_data.each do |data|
-      title = data[0]
-      case title
-      when "temperatureMin", "temperatureMax", "precipProbability", "precipType"
-        output << data
-      end
-    end
-    output
+  def today_high_low
+    min = daily_data["temperatureMin"]
+    max = daily_data["temperatureMax"]
+    "High: #{max}, Low: #{min}"
   end
+
+  def today_precip
+    percent = daily_data["precipProbability"]
+    type = daily_data["precipType"]
+    "#{percent} chance of #{type}"
+  end
+
+  # def today_details
+  #   daily_data = weather_get["daily"]["data"][0]
+  #   output = []
+  #   daily_data.each do |data|
+  #     title = data[0]
+  #     case title
+  #     when "temperatureMin", "temperatureMax", "precipProbability", "precipType"
+  #       output << data
+  #     end
+  #   end
+  #   output
+  # end
 
   def future_weather
     daily_data = weather_get["daily"]["data"]
@@ -72,10 +90,10 @@ class Location < ActiveRecord::Base
   def past_dates
     year = DateTime.now.strftime('%Y').to_i
     remaining_date = DateTime.now.strftime('-%m-%dT00:00:00')
-    year_array = (year-5..year-1).to_a.map do |year|
+    past_dates_array = (year-5..year-1).to_a.map do |year|
       year.to_s + remaining_date
     end
-    year_array
+    past_dates_array
   end
 
   def past_weather
@@ -84,8 +102,7 @@ class Location < ActiveRecord::Base
       uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{self.coords},#{date}?exclude=currently,minutely,hourly,alerts,flags")
       api_response = Net::HTTP.get(uri)
       response_collection = JSON.parse(api_response)
-      output << response_collection["daily"]["data"][0]["temperatureHigh"]
-      output << response_collection["daily"]["data"][0]["temperatureLow"]
+      output.push(response_collection["daily"]["data"][0]["temperatureHigh"], response_collection["daily"]["data"][0]["temperatureLow"])
     end
     output
   end
