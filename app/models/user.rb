@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   validates :password, presence: true
   validate :password_length
 
+  def recent_locations
+    self.locations.last(10).reverse
+  end
+
   def password
     @password ||= BCrypt::Password.new(password_hash)
   end

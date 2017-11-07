@@ -1,5 +1,11 @@
-USER SHOW PAGE
+<div class="search-contain">
+  <h3>Search History</h3>
 
-<% @user.locations.each do |location| %>
-  <p><%= location.address %></p>
-<% end %>
+  <% if @user.recent_locations.empty? %>
+    <p>You have not yet made a search.</p>
+  <% else %>
+    <% @user.recent_locations.each do |location| %>
+      <p><a href="/locations/<%= location.id %>"><%= location.address %></p>
+    <% end %>
+  <% end %>
+</div>

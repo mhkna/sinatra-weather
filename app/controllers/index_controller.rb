@@ -1,5 +1,5 @@
 get '/' do
-  redirect '/locations/new'
+  redirect '/sessions/new'
 end
 
 get '/unauthorized' do

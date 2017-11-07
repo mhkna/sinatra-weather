@@ -42,3 +42,22 @@ header {
 .error-li {
   color: red;
 }
+
+.full-container {
+  background: #ccffff;
+  border: 1px solid #00e6e6;
+  height: 400px;
+  margin: auto;
+  margin-bottom: 50px;
+  width: 80%;
+}
+
+.search-contain {
+  background: #ccffff;
+  border: 1px solid #00e6e6;
+  margin: auto;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  text-align: center;
+  width: 40%;
+}
