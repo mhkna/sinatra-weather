@@ -4,10 +4,10 @@
 <div class="full-container">
   <div class="row">
     <div class="col-8">
-      <h4><%= @location.today_icon %></H4>
       <div>
         <p><%= DateTime.now.strftime('%A, %b %m, %Y') %></p>
       </div>
+      <canvas id="<%= @location.today_icon %>" width="128" height="128"></canvas>
       <h4><%= @location.today_summary %></h4>
       <p><%= @location.today_details %></p>
 
@@ -25,24 +25,24 @@
         <div class="future-day-contain">
           <div><%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %></div>
           <div>sum: <%= day[1] %></div>
-          <div>icon: <%= day[2] %></div>
-          <div>tempmax: <%= day[3] %></div>
+          <div>tempmax: <%= day[2] %></div>
         </div>
       </div>
     <% end %>
   </div>
-    <!-- </div>
-    <div class="col">
-      NEXTDAY
-      NEXTICON
-      HIGHTEMP
-    </div>
-    <div class="col">
-      NEXTDAY
-      NEXTICON
-      HIGHTEMP
-    </div>
-  </div> -->
 
-  CHART HERE
+  <div class="row">
+    <div class="col">
+      <h4><%= DateTime.now.strftime('%B %-d') %> historical</h4>
+      <%= line_chart [
+        {name: "High", data: @location.past_high_temp},
+        {name: "Low", data: @location.past_low_temp}
+      ], colors: ["red", "blue"] %>
+    </div>
+  <div>
+
+
 </div>
+
+<script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+<script src="/JS/skycons.js"></script>
