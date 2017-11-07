@@ -56,7 +56,6 @@ class Location < ActiveRecord::Base
     past_temp("temperatureHigh")
   end
 
-
   private
 
   def location_info_get

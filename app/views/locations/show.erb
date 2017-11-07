@@ -22,10 +22,12 @@
   <div class="row">
     <% @location.future_weather.each do |day| %>
       <div class="col">
-        <%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %>
-        sum: <%= day[1] %>
-        icon: <%= day[2] %>
-        tempmax: <%= day[3] %>
+        <div class="future-day-contain">
+          <div><%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %></div>
+          <div>sum: <%= day[1] %></div>
+          <div>icon: <%= day[2] %></div>
+          <div>tempmax: <%= day[3] %></div>
+        </div>
       </div>
     <% end %>
   </div>
