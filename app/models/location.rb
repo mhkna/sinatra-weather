@@ -9,11 +9,7 @@ class Location < ActiveRecord::Base
 
   def now_weather
     current_data = weather_get["currently"]
-    "#{current_data["summary"].capitalize} and #{current_data["temperature"].round} degrees."
-  end
-
-  def daily_data
-    weather_get["daily"]["data"][0]
+    "#{current_data["summary"].capitalize} and #{current_data["temperature"].round} degrees"
   end
 
   def today_summary
@@ -24,16 +20,17 @@ class Location < ActiveRecord::Base
     daily_data["icon"]
   end
 
-  def today_high_low
-    min = daily_data["temperatureMin"]
-    max = daily_data["temperatureMax"]
-    "High: #{max}, Low: #{min}"
-  end
-
-  def today_precip
-    percent = daily_data["precipProbability"]
-    type = daily_data["precipType"]
-    "#{percent} chance of #{type}"
+  def today_details
+    data = daily_data
+    max = data["temperatureMax"].round
+    min = data["temperatureMin"].round
+    percent = data["precipProbability"]
+    type = data["precipType"]
+    if type
+      "High of #{max} degrees with a #{percent} chance of #{type}"
+    else
+      "There is a high of #{max} and a low of #{min} degrees"
+    end
   end
 
   def future_weather
@@ -44,13 +41,12 @@ class Location < ActiveRecord::Base
         title = data[0]
         case title
         when "time", "summary", "icon", "temperatureMax"
-          output << data
+          output << data[1]
         end
       end
     end
-    output
+    output.each_slice(4).to_a
   end
-
 
   def past_low_temp
     past_temp("temperatureLow")
@@ -80,6 +76,10 @@ class Location < ActiveRecord::Base
     uri = URI.parse("https://api.darksky.net/forecast/#{ENV['DARKSKY_TOKEN']}/#{coords}?exclude=minutely,hourly,alerts,flags")
     api_response = Net::HTTP.get(uri)
     response_collection = JSON.parse(api_response)
+  end
+
+  def daily_data
+    weather_get["daily"]["data"][0]
   end
 
   def past_dates

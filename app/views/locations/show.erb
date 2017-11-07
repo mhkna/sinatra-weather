@@ -9,6 +9,8 @@
         <p><%= DateTime.now.strftime('%A, %b %m, %Y') %></p>
       </div>
       <h4><%= @location.today_summary %></h4>
+      <p><%= @location.today_details %></p>
+
     </div>
 
     <div class="col-4">
@@ -18,22 +20,27 @@
   </div>
 
   <div class="row">
-    <div class="col">
-      NEXTDAY
-      NEXTICON
-      HIGHTEMP
-    </div>
-    <div class="col">
-      NEXTDAY
-      NEXTICON
-      HIGHTEMP
-    </div>
-    <div class="col">
-      NEXTDAY
-      NEXTICON
-      HIGHTEMP
-    </div>
+    <% @location.future_weather.each do |day| %>
+      <div class="col">
+        <%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %>
+        sum: <%= day[1] %>
+        icon: <%= day[2] %>
+        tempmax: <%= day[3] %>
+      </div>
+    <% end %>
   </div>
+    <!-- </div>
+    <div class="col">
+      NEXTDAY
+      NEXTICON
+      HIGHTEMP
+    </div>
+    <div class="col">
+      NEXTDAY
+      NEXTICON
+      HIGHTEMP
+    </div>
+  </div> -->
 
   CHART HERE
 </div>
