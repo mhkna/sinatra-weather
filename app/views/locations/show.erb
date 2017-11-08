@@ -31,9 +31,9 @@
     <% end %>
   </div>
 
-  <div class="row">
+  <div class="row-three">
     <div class="col-12">
-      <h4><%= DateTime.now.strftime('%B %-d') %> historical</h4>
+      <h4>Historical Temperatures</h4>
       <%= line_chart [
         {name: "High", data: @location.past_high_temp},
         {name: "Low", data: @location.past_low_temp}
@@ -41,3 +41,5 @@
     </div>
   <div>
 </div>
+
+<script src="/JS/skycons.js"></script>
