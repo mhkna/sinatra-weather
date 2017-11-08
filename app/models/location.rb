@@ -24,10 +24,10 @@ class Location < ActiveRecord::Base
     data = daily_data
     max = data["temperatureMax"].round
     min = data["temperatureMin"].round
-    percent = data["precipProbability"]
+    percent = data["precipProbability"] * 100
     type = data["precipType"]
     if type
-      "High of #{max} degrees with a #{percent} chance of #{type}"
+      "High of #{max} degrees with a #{percent}% chance of #{type}"
     else
       "There is a high of #{max} and a low of #{min} degrees"
     end
