@@ -1,4 +1,4 @@
-
+<!--
 <h2>Results for <%= @location.formatted_address %></h2>
 
 <div class="full-container">
@@ -9,7 +9,7 @@
         <p><%= DateTime.now.strftime('%A, %b %m, %Y') %></p>
       </div>
       <canvas id="<%= @location.today_icon %>" width="128" height="128"></canvas>
-      <h4><%= @location.today_summary %></h4>
+      <h4><%= @location.today_summary[0...-1] %></h4>
       <p><%= @location.today_details %></p>
 
     </div>
@@ -24,8 +24,8 @@
     <% @location.future_weather.each do |day| %>
       <div class="col-4">
         <div class="future-day-contain">
-          <div><%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %></div>
-          <div><%= day[1][0...-1] %> with a high of <%= day[2].round %> degrees.</div>
+          <div class="future-day-name"><%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %></div>
+          <div><%= day[1][0...-1] %> with a high of <%= day[2].round %> degrees</div>
         </div>
       </div>
     <% end %>
@@ -40,9 +40,7 @@
       ], colors: ["red", "blue"] %>
     </div>
   <div>
-
-
 </div>
 
 <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
-<script src="/JS/skycons.js"></script>
+<script src="/JS/skycons.js"></script> -->
