@@ -27,7 +27,7 @@ class Location < ActiveRecord::Base
     percent = data["precipProbability"] * 100
     type = data["precipType"]
     if type
-      "High of #{max} degrees with a #{percent}% chance of #{type}"
+      "High of #{max} degrees with a #{percent.round}% chance of #{type}"
     else
       "There is a high of #{max} and a low of #{min} degrees"
     end

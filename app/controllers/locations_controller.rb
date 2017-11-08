@@ -17,6 +17,5 @@ end
 get '/locations/:id' do
   authenticate!
   @location = Location.find(params[:id])
-  # @weather = @location.weather_get
   erb :'locations/show'
 end

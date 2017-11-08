@@ -18,6 +18,7 @@ gem 'bcrypt'
 gem 'dotenv'
 
 gem 'chartkick'
+gem 'sprockets'
 
 group :test do
   gem 'shoulda-matchers'
