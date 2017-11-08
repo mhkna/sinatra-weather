@@ -45,7 +45,7 @@ class Location < ActiveRecord::Base
         end
       end
     end
-    output.each_slice(4).to_a
+    output.each_slice(3).to_a
   end
 
   def past_low_temp

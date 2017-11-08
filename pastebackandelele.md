@@ -4,6 +4,7 @@
 <div class="full-container">
   <div class="row">
     <div class="col-8">
+      <h4>Today</h4>
       <div>
         <p><%= DateTime.now.strftime('%A, %b %m, %Y') %></p>
       </div>
@@ -21,18 +22,17 @@
 
   <div class="row">
     <% @location.future_weather.each do |day| %>
-      <div class="col">
+      <div class="col-4">
         <div class="future-day-contain">
           <div><%= DateTime.strptime(day[0].to_s, '%s').strftime('%A') %></div>
-          <div>sum: <%= day[1] %></div>
-          <div>tempmax: <%= day[2] %></div>
+          <div><%= day[1][0...-1] %> with a high of <%= day[2].round %> degrees.</div>
         </div>
       </div>
     <% end %>
   </div>
 
   <div class="row">
-    <div class="col">
+    <div class="col-12">
       <h4><%= DateTime.now.strftime('%B %-d') %> historical</h4>
       <%= line_chart [
         {name: "High", data: @location.past_high_temp},

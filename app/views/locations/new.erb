@@ -1,12 +1,12 @@
 <%= erb :'_errors' %>
 
 <form id="new-location" action="/locations" method="post">
-  <div>
-    <label for="address">Enter Location:</label>
-    <br>
-    <input type="text" name="location[address]">
-  </div>
-  <div>
-    <input type="submit" value="Get Weather">
+  <div id="input-button-contain">
+    <div class="new-location-input">
+      <input type="text" name="location[address]" placeholder="Enter Location">
+    </div>
+    <div class="submit-button">
+      <input type="submit" value="Get Weather">
+    </div>
   </div>
 </form>
