@@ -1,5 +1,6 @@
 //= require jsapi
 //= require chartkick
+//= require skycons
 
 $(document).ready(function() {
   // This is called after the document has loaded in its entirety
