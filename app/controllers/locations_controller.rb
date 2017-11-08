@@ -10,7 +10,7 @@ post '/locations' do
     redirect "/locations/#{@location.id}"
   else
     @errors = @location.errors.full_messages
-    erb :'locations/show'
+    erb :'locations/new'
   end
 end
 
