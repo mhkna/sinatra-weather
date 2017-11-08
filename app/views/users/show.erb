@@ -2,7 +2,7 @@
   <h3>Search History</h3>
 
   <% if @user.recent_locations.empty? %>
-    <p>You have not yet made a search.</p>
+    <p>You have not yet made a search</p>
   <% else %>
     <% @user.recent_locations.each do |location| %>
       <p><a href="/locations/<%= location.id %>"><%= location.address %></p>
